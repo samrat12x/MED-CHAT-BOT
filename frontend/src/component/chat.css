@@ -1,0 +1,46 @@
+/* src/chat.css */
+.chat-interface {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    max-width: 100%;
+    background-image: url("src/assets/who_bg-removebg-preview.png");
+    background-repeat: no-repeat;
+    background-size: 50vh;
+    background-position: center center;
+  }
+  
+  .messages {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+   
+    word-break: break-word; /* Ensures long words break to prevent overflow */
+    
+  }
+  
+  .input-container {
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid #ccc;
+  }
+  
+  /* Animation for new messages */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .new-message {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
