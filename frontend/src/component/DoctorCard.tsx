@@ -1,36 +1,59 @@
-// DoctorCard.tsx
-
 import React from 'react';
 import { Card, CardContent, Typography } from '@mui/material';
 
-interface Doctor {
+interface DoctorData {
   name: string;
   title: string;
+  phone: number;
+  profile_pic: string;
   experience: number;
-  // Add other properties if needed
+  stars: number;
+  patients_handled: number;
+  location: string;
+  gender: string;
 }
 
-interface DoctorCardProps {
-  doctor: Doctor;
-}
-
-const DoctorCard: React.FC<DoctorCardProps> = ({ doctor }) => {
+ function DoctorCard({
+  name,
+  title,
+  phone,
+  profile_pic,
+  experience,
+  stars,
+  patients_handled,
+  location,
+  gender,
+}: DoctorData) {
   return (
     <Card>
       <CardContent>
-        <Typography variant="h5" component="div">
-          {doctor.name}
+        <img src={profile_pic} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
+        <Typography variant="h5" component="h2">
+          {name}
         </Typography>
-        <Typography color="text.secondary">
-          Title: {doctor.title}
+        <Typography color="textSecondary" gutterBottom>
+          {title}
         </Typography>
-        <Typography color="text.secondary">
-          Experience: {doctor.experience}
+        <Typography variant="body2" component="p">
+          Phone: {phone}
         </Typography>
-        {/* Add other properties you want to display */}
+        <Typography variant="body2" component="p">
+          Experience: {experience}
+        </Typography>
+        <Typography variant="body2" component="p">
+          Stars: {stars}
+        </Typography>
+        <Typography variant="body2" component="p">
+          Patients Handled: {patients_handled}
+        </Typography>
+        <Typography variant="body2" component="p">
+          Location: {location}
+        </Typography>
+        <Typography variant="body2" component="p">
+          Gender: {gender}
+        </Typography>
       </CardContent>
     </Card>
   );
-};
-
+}
 export default DoctorCard;

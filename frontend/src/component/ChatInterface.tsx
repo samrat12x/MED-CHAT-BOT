@@ -1,16 +1,17 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { TextField, Button, Paper, Box } from '@mui/material';
 import axios from 'axios';
-
+import DoctorCard from './DoctorCard'
 import Message from './Message';
 import './chat.css'; // Import the CSS file
+
 
 export default function ChatInterface() {
   const [messages, setMessages] = useState([
     { text: 'Hello , Welcome to SwasthCare. Tell us your problem?', isNew: false },
   ]);
 
-  const [DoctorCard,setDoctorCard]=useState<any>([]);
+  const [DoctorCards,setDoctorCards]=useState<any>([]);
 
   const [inputValue, setInputValue] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null); // Explicitly specifying the type of ref
@@ -53,21 +54,40 @@ export default function ChatInterface() {
         // const botResponse = { text:  response.data.response+'card invoked', isNew: false }; // You might want to format this data appropriately
         // setMessages(prevMessages => [...prevMessages, botResponse]);
         const cardComponents: JSX.Element[] = [];
-        for (const key in responseData) {
-          if (Object.prototype.hasOwnProperty.call(responseData, key)) {
-            const value = responseData[key];
+        for (const key in responseData.name) {
+          if (Object.prototype.hasOwnProperty.call(responseData.name, key)) {
+            const doctorId = key;
+            const doctorName = responseData.name[doctorId];
+            const doctorTitle = responseData.title[doctorId];
+            const doctorPhone = responseData.phone[doctorId];
+            const doctorProfilePic = responseData.profile_pic[doctorId];
+            const doctorExperience = responseData.experience[doctorId];
+            const doctorStars = responseData.stars[doctorId];
+            const doctorPatientsHandled = responseData.patients_handled[doctorId];
+            const doctorLocation = responseData.location[doctorId];
+            const doctorGender = responseData.gender[doctorId];
+        
             const cardComponent = (
-              <div key={key}>
-                <h2>{key}</h2>
-                <p>{JSON.stringify(value)}</p> {/* You can format the value as needed */}
-              </div>
+              <DoctorCard
+                key={doctorId}
+                name={doctorName}
+                title={doctorTitle}
+                phone={doctorPhone}
+                profile_pic={doctorProfilePic}
+                experience={doctorExperience}
+                stars={doctorStars}
+                patients_handled={doctorPatientsHandled}
+                location={doctorLocation}
+                gender={doctorGender}
+              />
             );
             cardComponents.push(cardComponent);
           }
         }
+        
+        setDoctorCards(cardComponents);
 
-        setDoctorCard(cardComponents);
-
+        
       }}catch(error){
 
       
@@ -113,13 +133,8 @@ export default function ChatInterface() {
           <Message key={index} text={msg.text} isNew={msg.isNew} />
         ))}
 
-<div>
-    {/* Render doctorCards here */}
-    {DoctorCard.map((card: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined, index: React.Key | null | undefined) => (
-      <div key={index}>{card}</div>
-    ))}
-  </div>
 
+{DoctorCards}
         <div ref={messagesEndRef} />
       </Box>
       <Box className="input-container">
