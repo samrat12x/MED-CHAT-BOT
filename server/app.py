@@ -72,14 +72,14 @@ def ask_chatbot(user_prompt):
 
             You are a helpful assistant.  Based on the following user input, Deduce four things: Validity of the question,Specialty of the doctor to refer, preferred gender of the doctor, as well as location of the patient
             All values should be chosen from:
-            Validity options : VALID OR INVALID
+            Validity options : VALID OR OUTOFSCOPE
             Specialties Available: {doctors_df.title.unique()},
             Preferred Gender Available: {doctors_df.gender.unique()}
             (SAY EXACTLY 'NONE'(all caps) AND NOTHING DIFFERENT IF PREFERRED GENDER WAS NOT MENTIONED OR WAS OMITTED, SAY 'NA' IF USER EXPLICITY SAYS THAT THEY HAVE NO PREFERENCE OR SOMETHING AKIN TO IT IN THE PROMPT (DONT USE NA OTHERWISE TO REPRESENT NONE)),
             Locations Available: {doctors_df.location.unique()}
             (IF A LOCATION IS GIVEN BUT IT IS NOT IN THE LIST, CHOOSE THE GEOGRAPHICALLY CLOSEST LOCATION TO THE ONE IN USER INPUT, FROM THE GIVEN LIST. RETURN EXACTLY 'NONE' (all caps) AND NOTHING DIFFERENT IF NOTHING RELATED TO LOCATION INFORMATION CAME FROM USER DO NOT MAKE ASSUMPTIONS AND DONT USE NA IN PLACE OF NONE FOR Location (its fine for gender)).
 
-            Return in the form of X : Y (like QuesValidity:<VALID OR INVALID> , Specialty: <name of specialty>, Pref_gender: <preferred gender or NONE>, Location: <location or NONE> )
+            Return in the format of X : Y (like QuesValidity:<VALID OR OUTOFSCOPE> , Specialty: <name of specialty>, Pref_gender: <preferred gender or NONE>, Location: <location or NONE> )
             """},
             {"role": "user", "content": f"{user_prompt}"}
         ]
@@ -89,12 +89,11 @@ def ask_chatbot(user_prompt):
   specialty = ""
   location = ""
   pref_gender = ""
-  print(ans)
+  print(ans+"hello")
 
-  for i in ["INVALID","invalid","Invalid","Not valid","not valid"]:
-     if i in ans:
-        return """ sorry please ask a valid question"""
-
+  invalid_words = ["OUTOFSCOPE", "outofscope", "Outofscope"]
+  if any(word.lower() in ans.lower() for word in invalid_words):
+    return "sorry please ask a valid question"
 
   for i in doctors_df.title.unique():
     if (i.lower() in ans) or (i.capitalize() in ans):
@@ -115,6 +114,9 @@ def ask_chatbot(user_prompt):
   print(specialty, location, pref_gender)
   final_output = get_doctors_by_criteria(specialty, location, pref_gender)
   print(final_output)
+  if final_output.empty:
+     return """Sorry no doctor available in that {} domain """.format(specialty)
+
   return final_output
 
 
