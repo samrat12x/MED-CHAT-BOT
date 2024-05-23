@@ -12,6 +12,9 @@ interface DoctorData {
   location: string;
   gender: string;
 }
+const handleClick = () => {
+  window.location.href = 'http://127.0.0.1:6969/booking.html';
+};
 
  function DoctorCard({
   name,
@@ -25,7 +28,7 @@ interface DoctorData {
   gender,
 }: DoctorData) {
   return (
-    <Card>
+    <Card  onClick={handleClick}>
       <CardContent>
         <img src={profile_pic} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
         <Typography variant="h5" component="h2">

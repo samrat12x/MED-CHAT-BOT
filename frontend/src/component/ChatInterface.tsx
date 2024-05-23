@@ -8,7 +8,7 @@ import './chat.css'; // Import the CSS file
 
 export default function ChatInterface() {
   const [messages, setMessages] = useState([
-    { text: 'Hello , Welcome to SwasthCare. Tell us your problem?', isNew: false },
+    { text: 'Hello , Welcome to SwasthCare. Tell us your problem?', isNew: false , isBot:true},
   ]);
 
   const [DoctorCards,setDoctorCards]=useState<any>([]);
@@ -26,9 +26,9 @@ export default function ChatInterface() {
 
   const sendMessage = useCallback(async () => {
     if (inputValue.trim()) {
-      const newMessage = { text: inputValue, isNew: true };
+      const newMessage = { text: inputValue, isNew: true , isBot: false };
       setMessages(prevMessages => [...prevMessages, newMessage]);
-
+      setDoctorCards(" ") 
       try {
         const response = await axios.post(
           'http://127.0.0.1:5000/',
@@ -93,7 +93,7 @@ export default function ChatInterface() {
       
 
         //simple message response
-        const botResponse = { text: response.data.response , isNew: false };
+        const botResponse = { text: response.data.response , isNew: false , isBot: true};
         setMessages(prevMessages => [...prevMessages, botResponse]);
       
       }
@@ -104,7 +104,7 @@ export default function ChatInterface() {
 
       } catch (error) {
         console.error('Error sending message:', error);
-        const errorMessage = { text: 'Error: Unable to get response from the server.', isNew: false };
+        const errorMessage = { text: 'Error: Unable to get response from the server.', isNew: false ,isBot: true};
         setMessages(prevMessages => [...prevMessages, errorMessage]);
       }
 
@@ -130,11 +130,11 @@ export default function ChatInterface() {
         }}
       >
         {messages.map((msg, index) => (
-          <Message key={index} text={msg.text} isNew={msg.isNew} />
+          <Message key={index} text={msg.text} isNew={msg.isNew} isBot={msg.isBot} />
         ))}
 
+<div className='Doctorcards'>{DoctorCards}</div>
 
-{DoctorCards}
         <div ref={messagesEndRef} />
       </Box>
       <Box className="input-container">

@@ -10,7 +10,7 @@ from flask_cors import CORS
 load_dotenv()
 
 
-openai.api_key = 'sk-proj-4aA3sWXXECCfqT4uJ5uTT3BlbkFJuq3ADd5Ttg6WZb6dGzff'
+openai.api_key = 'sk-proj-LFnmAPh1U5zx0L5jdhUlT3BlbkFJPeOf8n4DeJbTz0MpQXY1'
 doctors_df = pd.read_csv('doctors.csv')
 
 

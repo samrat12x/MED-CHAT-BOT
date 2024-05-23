@@ -20,6 +20,9 @@
     word-break: break-word; /* Ensures long words break to prevent overflow */
     
   }
+  .Doctorcards{
+    display: flex;
+  }
   
   .input-container {
     display: flex;
@@ -43,4 +46,10 @@
   .new-message {
     animation: fadeIn 0.5s ease-in-out;
   }
+  .BotMsg{
+    
   
+  }
+  .UserMsg{
+    
+  }
