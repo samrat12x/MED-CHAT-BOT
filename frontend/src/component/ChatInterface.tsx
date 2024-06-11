@@ -140,6 +140,12 @@ export default function ChatInterface() {
       <Box className="input-container">
         <TextField
           value={inputValue}
+          //added: pressing  enter key is not a subsitution for pressing send button
+          onKeyDown={(event)=>{if (event.key === 'Enter') {
+            // Handle the Enter key press
+          sendMessage()
+            // You can perform any action here, like submitting a form, etc.
+          }}}
           onChange={e => setInputValue(e.target.value)}
           label="Type your message..."
           variant="outlined"

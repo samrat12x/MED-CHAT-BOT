@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardContent, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 interface DoctorData {
   name: string;
@@ -12,11 +13,8 @@ interface DoctorData {
   location: string;
   gender: string;
 }
-const handleClick = () => {
-  window.location.href = 'http://127.0.0.1:6969/booking.html';
-};
 
- function DoctorCard({
+const DoctorCard: React.FC<DoctorData> = ({
   name,
   title,
   phone,
@@ -26,9 +24,15 @@ const handleClick = () => {
   patients_handled,
   location,
   gender,
-}: DoctorData) {
+}) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/calendar');
+  };
+
   return (
-    <Card  onClick={handleClick}>
+    <Card onClick={handleClick} style={{ cursor: 'pointer' }}>
       <CardContent>
         <img src={profile_pic} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
         <Typography variant="h5" component="h2">
@@ -41,7 +45,7 @@ const handleClick = () => {
           Phone: {phone}
         </Typography>
         <Typography variant="body2" component="p">
-          Experience: {experience}
+          Experience: {experience} years
         </Typography>
         <Typography variant="body2" component="p">
           Stars: {stars}
@@ -58,5 +62,6 @@ const handleClick = () => {
       </CardContent>
     </Card>
   );
-}
+};
+
 export default DoctorCard;
